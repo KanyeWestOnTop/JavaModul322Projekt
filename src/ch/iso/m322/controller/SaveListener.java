@@ -28,7 +28,7 @@ public class SaveListener implements ActionListener {
         Component item = (Component) e.getSource();
         MyFrame frame = (MyFrame) ReferenceFinder.findFrame(item);
 
-        // Save Exercise data
+        // Exercise data
         final JList<Exercise> tableExercise = frame.getExerciseJList();
         final DefaultListModel<Exercise> modelExercise = (DefaultListModel<Exercise>) tableExercise.getModel();
         ArrayList<Exercise> exerciseData = new ArrayList<>();
@@ -40,24 +40,44 @@ public class SaveListener implements ActionListener {
         IDataStoreExercise storeExercise = new DataStoreExercise();
         storeExercise.save(exerciseData, IDataStoreExercise.EXERCISE_LIST);
 
-        // Save Tracker data with Exercise references
+        // Tracker data
         final JTable tableTracker = frame.getGetTrackerTable();
         final DefaultTableModel modelTracker = (DefaultTableModel) tableTracker.getModel();
         ArrayList<Tracker> data = new ArrayList<>();
         final Vector<?> left_vector = modelTracker.getDataVector();
         for (Object o : left_vector) {
             String trackName = (String) ((Vector<?>) o).elementAt(0);
-            Exercise exercise = (Exercise) ((Vector<?>) o).elementAt(1);
+            String exerciseName = (String) ((Vector<?>) o).elementAt(1);
+            Exercise exercise = findExerciseByName(exerciseName);
             String date = (String) ((Vector<?>) o).elementAt(2);
             int weight = Integer.parseInt((String) ((Vector<?>) o).elementAt(3));
             int rpe = Integer.parseInt((String) ((Vector<?>) o).elementAt(4));
 
-            // Assuming you have a constructor in Tracker that takes Exercise as a parameter
             Tracker tracker = new Tracker(trackName, exercise, date, weight, rpe);
             data.add(tracker);
         }
 
         IDataStoreTracker storeTracker = new DataStoreTrack();
         storeTracker.save(data, IDataStoreTracker.TRACK_LIST);
+    }
+
+    private Exercise findExerciseByName(String exerciseName) {
+        Exercise exercise = null;
+
+        try {
+            IDataStoreExercise storeExercise = new DataStoreExercise();
+            ArrayList<Exercise> exercises = storeExercise.load(IDataStoreExercise.EXERCISE_LIST);
+
+            for (Exercise e : exercises) {
+                if (e.getName().equals(exerciseName)) {
+                    exercise = e;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return exercise;
     }
 }

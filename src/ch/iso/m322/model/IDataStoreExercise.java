@@ -34,4 +34,7 @@ public interface IDataStoreExercise {
 	public void save(ArrayList<Exercise> data, int type); 
 	
 	
+
+	
+	
 }
