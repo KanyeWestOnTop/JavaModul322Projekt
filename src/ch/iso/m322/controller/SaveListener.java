@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -49,7 +50,7 @@ public class SaveListener implements ActionListener {
             String trackName = (String) ((Vector<?>) o).elementAt(0);
             String exerciseName = (String) ((Vector<?>) o).elementAt(1);
             Exercise exercise = findExerciseByName(exerciseName);
-            String date = (String) ((Vector<?>) o).elementAt(2);
+            Date date = (Date) ((Vector<?>) o).elementAt(2);
             int weight = Integer.parseInt((String) ((Vector<?>) o).elementAt(3));
             int rpe = Integer.parseInt((String) ((Vector<?>) o).elementAt(4));
 

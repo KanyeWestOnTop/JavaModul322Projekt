@@ -1,16 +1,17 @@
 package ch.iso.m322.model;
 
+import java.util.Date;
 
 public class Tracker {
 
 	private int id;
 	private String name;
 	private Exercise exercise;
-	private String date;
+	private Date date;
 	private int weight;
 	private int RPE;
 	
-	public Tracker(String name, Exercise exercise, String date, int weight, int rPE) {
+	public Tracker(String name, Exercise exercise, Date date, int weight, int rPE) {
 		super();
 		this.name = name;
 		this.exercise = exercise;
@@ -43,11 +44,11 @@ public class Tracker {
 		this.exercise = exercise;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

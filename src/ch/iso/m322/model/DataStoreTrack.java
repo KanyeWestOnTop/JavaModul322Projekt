@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DataStoreTrack implements IDataStoreTracker {
 
@@ -37,7 +39,7 @@ public class DataStoreTrack implements IDataStoreTracker {
 			while (rs.next()) {
 			    String name = rs.getString("trackName");
 			    String exerciseName = rs.getString("exerciseName");
-			    String date = rs.getString("date");
+			    Date date = rs.getDate("date");
 			    int weight = rs.getInt("weight");
 			    int RPE = rs.getInt("RPE");
 
@@ -52,7 +54,7 @@ public class DataStoreTrack implements IDataStoreTracker {
 			rs.close();
 
 		} catch (Exception e) {
-			data.add(new Tracker("data ", null, " not loaded ", 0, 0));
+			data.add(new Tracker("data not loaded", null, null, 0, 0));
 			e.printStackTrace();
 		}
 
@@ -75,10 +77,12 @@ public class DataStoreTrack implements IDataStoreTracker {
 			    String exerciseName = tracker.getExercise().getName();
 
 			    int exerciseId = findExerciseIdByName(exerciseName);
+			    
+			    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			    stmt.executeUpdate(
 			        "INSERT INTO tTrack (name, exercise_id, date, weight, RPE) VALUES ('"
-			            + tracker.getName() + "', '" + exerciseId + "', '" + tracker.getDate() + "', "
+			            + tracker.getName() + "', '" + exerciseId + "', '" + dateFormat.format(tracker.getDate()) + "', "
 			            + tracker.getWeight() + ", " + tracker.getRPE() + ");",
 			        Statement.RETURN_GENERATED_KEYS);
 			}

@@ -49,7 +49,7 @@ public class MyFrame extends JFrame {
 	private JTable TrackerTable;
 	private JComboBox<Integer> rpe;
 	private JSlider weight;
-	private String date;
+	private Date date;
 
 	public MyFrame() throws IOException {
 		super(FrameConstants.FRAME_TITLE);
@@ -243,14 +243,7 @@ public class MyFrame extends JFrame {
 		content.add(contentLow);
 		return content;
 	}
-
-	public String setDate() {
-		Date currentDate = new Date();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		return dateFormat.format(currentDate);
-
-	}
+	
 
 	public JTextField getExercise() {
 		return exercise;
@@ -292,14 +285,15 @@ public class MyFrame extends JFrame {
 		this.TrackerTable = getTrackerTable;
 	}
 
-	public String getDate() {
+	public Date getDate() {
+		
 		return date;
 	}
 
 	public Tracker getData() {
 		String name = this.myName.getText();
 		Exercise exercise = this.exerciseJList.getSelectedValue();
-		String date = this.setDate();
+		Date date = this.date;
 		int weight = this.weight.getValue();
 		int rpe = (int) this.rpe.getSelectedItem();
 		return new Tracker(name, exercise, date, weight, rpe);
